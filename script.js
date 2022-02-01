@@ -1,18 +1,18 @@
 var questions = [
   {
     question: "What is a variable in JavaScript?",
-    choice: ["A server", "Name of storage location", "A change of plans"],
-    answer: "Name of storage location",
+    choice: ["A: A server", "B: Name of storage location", "C: A change of plans"],
+    answer: "B: Name of storage location",
   },
   {
     question: "What is CSS?",
-    choice: ["Rule based language", "A naval vessel", "A countrys acronym"],
-    answer: "Rule based language",
+    choice: ["A: Rule based language", "B: A naval vessel", "C: A countrys acronym"],
+    answer: "A: Rule based language",
   },
   {
     question: "What does HTML stand for?",
-    choice: ["HyperTime Marked Location", "HyperTechnical Marked Location", "HyperText Markup Language"],
-    answer: "HyperText Markup Language",
+    choice: ["A: HyperTime Marked Location", "B: HyperTechnical Marked Location", "C: HyperText Markup Language"],
+    answer: "C: HyperText Markup Language",
   },
 ];
 

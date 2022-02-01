@@ -30,4 +30,8 @@ THEN I can save my initials and my score
 
 ## Deployed
 
-##
+https://kge123.github.io/code-quiz/
+
+## Demo
+
+[<img src="./CodeQuiz.jpg" height="400px">]
