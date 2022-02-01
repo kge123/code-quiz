@@ -1,91 +1,141 @@
 var questions = [
-    {
-      question: "1+1",
-      choice: ["2", "3"],
-      answer: "2",
-    },
-    {
-      question: "1+1",
-      choice: ["2", "3"],
-      answer: "3"
-    },
-    {
-      question: "Question 3",
-      choice: [""],
-      answer: "Blah"
-    },
-  ];
+  {
+    question: "1+1",
+    choice: ["2", "3"],
+    answer: "2",
+  },
+  {
+    question: "2+2",
+    choice: ["4", "5"],
+    answer: "4",
+  },
+  {
+    question: "Question 3",
+    choice: ["Blah"],
+    answer: "Blah",
+  },
+];
 
+var timeContainer = document.getElementById("time");
 
-var timeContainer = document.getElementById('time');
+var startContainer = document.getElementById("startScreen");
 
-var startContainer = document.getElementById('startScreen');
+var startButton = document.getElementById("start");
 
-var startButton = document.getElementById('start');
+var questionContainer = document.getElementById("questionContainer");
 
-var questionContainer = document.getElementById('questionContainer');
+var questionTitle = document.getElementById("question-title");
 
-var questionTitle = document.getElementById('question-title');
+var choicesContainer = document.getElementById("choices");
 
-var choicesContainer = document.getElementById('choices');
+var endContainer = document.getElementById("end");
 
-var endContainer = document.getElementById('end');
+var finalScoreContainer = document.getElementById("finalScore");
 
-var finalScoreContainer = document.getElementById('finalScore');
+var initialsContainer = document.getElementById("initials");
 
-var initialsContainer = document.getElementById('initials');
+var submitButton = document.getElementById("submit");
 
-var submitButton = document.getElementById('submit');
+var highScoresContainer = document.getElementById("highScores");
 
-var highScoresContainer = document.getElementById('highScores');
+var scoresListContainer = document.getElementById("scoresList");
 
-var scoresListContainer = document.getElementById('scoresList');
-
-var reloadButton = document.getElementById('reload');
+var reloadButton = document.getElementById("reload");
 
 var timerid;
-var time = 15;
+var time = 60;
 var index = 0;
 
-function start(){
-    //hide the start container
-    startContainer.setAttribute('class', 'hide')
+function start() {
+  //hide the start container
+  startContainer.setAttribute("class", "hide");
 
-    //show the question container
-    questionContainer.removeAttribute('class')
+  //show the question container
+  questionContainer.removeAttribute("class");
 
-    //start timer
-timerid=setInterval(function(){
-time--;
-timeContainer.textContent = time
-if(time<=0){
-    //gameOver()
+  //start timer
+  timerid = setInterval(function () {
+    time--;
+    timeContainer.textContent = time;
+    if (time <= 0) {
+      gameOver();
+    }
+  }, 1000);
+
+  timeContainer.textContent = time;
+
+  askQuestion();
 }
 
-},1000)
+function askQuestion() {
+  var currentQuestion = questions[index];
 
-timeContainer.textContent = time
+  //show the first question
+  questionTitle.textContent = currentQuestion.question;
 
-askQuestion()
+  choicesContainer.innerHTML = "";
+
+  //create a for loop that takes in the choice array from your questionObj and dynamically create buttons for each choice.
+  for (let index = 0; index < currentQuestion.choice.length; index++) {
+    var choicesButton = document.createElement("button");
+    choicesButton.setAttribute("class", "btn");
+    choicesButton.setAttribute("value", currentQuestion.choice[index]);
+    choicesButton.textContent = currentQuestion.choice[index];
+
+    choicesButton.onclick = checkAnswers;
+
+    choicesContainer.append(choicesButton);
+  }
+  //then give each button a click event. you want to also move to the next question.
+  //on click of answer you need to check if the selected option is correct. If it is wrong you need to subtract time from the clock
+  //if the last question in the question array has been asked its gameOver(), if not ask the next question.
+}
+// check answers
+function checkAnswers() {
+  console.log(this.value);
+  if (this.value !== questions[index].answer) {
+    time -= 5;
+
+    timeContainer.textContent = time;
+    if (time < 0) {
+      time = 0;
+    }
+  }
+
+  index++;
+
+  if (index === questions.length) {
+    gameOver();
+  } else {
+    askQuestion();
+  }
+}
+// game over
+function gameOver() {
+  clearInterval(timerid);
+
+  questionContainer.setAttribute("class", "hide");
+
+  //show the question container
+  endContainer.removeAttribute("class");
+
+  finalScoreContainer.textContent = time;
 }
 
-function askQuestion(){
-var currentQuestion = questions[index];
+function userScore() {
+  var initials = initialsContainer.value;
 
-//show the first question
-questionTitle.textContent = currentQuestion.question;
+  var userObj = {
+    initials: initials,
+    score: time,
+  };
 
+  var highScores = JSON.parse(localStorage.getItem("highscores")) || [];
 
-//create a for loop that takes in the choice array from your questionObj and dynamically create buttons for each choice. 
-
-//then give each button a click event. you want to also move to the next question. 
-
-//on click of answer you need to check if the selected option is correct. If it is wrong you need to subtract time from the clock
-
-
-//if the last question in the question array has been asked its gameOver(), if not ask the next question. 
-
+  highScores.push(userObj);
+  localStorage.setItem("highscores", JSON.stringify(highScores));
+  window.location.href = "highscores.html";
 }
 
-
+submitButton.onclick = userScore;
 startButton.onclick = start;
