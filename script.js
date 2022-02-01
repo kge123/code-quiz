@@ -1,18 +1,18 @@
 var questions = [
   {
-    question: "1+1",
-    choice: ["2", "3"],
-    answer: "2",
+    question: "What is a variable in JavaScript?",
+    choice: ["A server", "Name of storage location", "A change of plans"],
+    answer: "Name of storage location",
   },
   {
-    question: "2+2",
-    choice: ["4", "5"],
-    answer: "4",
+    question: "What is CSS?",
+    choice: ["Rule based language", "A naval vessel", "A countrys acronym"],
+    answer: "Rule based language",
   },
   {
-    question: "Question 3",
-    choice: ["Blah"],
-    answer: "Blah",
+    question: "What does HTML stand for?",
+    choice: ["HyperTime Marked Location", "HyperTechnical Marked Location", "HyperText Markup Language"],
+    answer: "HyperText Markup Language",
   },
 ];
 
@@ -136,6 +136,12 @@ function userScore() {
   localStorage.setItem("highscores", JSON.stringify(highScores));
   window.location.href = "highscores.html";
 }
+
+// function playAgain(){
+//   window.location.href = "index.html";
+// }
+
+// reloadButton.onclick = playAgain;
 
 submitButton.onclick = userScore;
 startButton.onclick = start;
